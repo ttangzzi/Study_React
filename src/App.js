@@ -15,32 +15,31 @@ function App() {
         newTitle.sort();
         setTitle(newTitle);
       }}>정렬</button>
-      <div className="list">
-        <span onClick={()=>{
-          let copy = [...title];
-          copy[0] = '여자 코트 추천'
-          setTitle(copy);
-        }}>👚</span>
-        <span onClick={()=>{
-          let copy = [...title];
-          copy[0] = '남자 코트 추천'
-          setTitle(copy);
-        }}>👕</span>
-        <h4>{title[0]} <span onClick={()=>{
-          setLike(like+1)
-        }}>👍</span> {like} </h4>
-        <p>7월 16일 발행</p>
-      </div>
-      <div className="list">
-        <h4>{title[1]}</h4>
-        <p>7월 16일 발행</p>
-      </div>
-      <div className="list">
-        <h4>{title[2]}</h4>
-        <p>7월 16일 발행</p>
-      </div>
+      <List title={title[0]} date="7월 16일 발행"/>
+      <List title={title[1]} date="7월 16일 발행"/>
+      <List title={title[2]} date="7월 16일 발행"/>
+      <Modal/>
     </div>
   );
+}
+
+function List({title, date}) {
+  return (
+    <div className="list">
+    <h4>{title}</h4>
+    <p>{date}</p>
+  </div>
+  )
+}
+
+function Modal() {
+  return (
+    <div className="modal">
+      <h4>제목</h4>
+      <p>날짜</p>
+      <p>상세내용</p>
+    </div>
+  )
 }
 
 export default App;

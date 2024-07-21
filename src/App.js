@@ -6,6 +6,7 @@ function App() {
   let [title, setTitle] = useState(['남자 코트 추천', '강남 우동맛집', '파이썬 독학']);
   let [modal, setModal] = useState(false);
   let [like, setLike] = useState([0,0,0]);
+  let [modalTitle, setModalTitle] = useState(0);
   return (
     <div className="App">
       <div className="black-nav">
@@ -23,6 +24,7 @@ function App() {
             <div className="list" key={i}>
               <h4 onClick={()=>{
                 modal == true ? setModal(false) : setModal(true);
+                setModalTitle(i);
               }}>{title[i]}</h4>
               <span onClick={()=>{
                 let newLike = [...like];
@@ -39,10 +41,10 @@ function App() {
         modal == true ? <Modal color={"skyblue"} title={title} woman = {
           ()=> {
             let newTitle = [...title];
-            newTitle[0] = "여자 코트 추천";
+            newTitle[0] = "여자코트 추천"
             setTitle(newTitle);
           }
-        }/> : null
+        } modalTitle={modalTitle} /> : null
       }
     </div>
   );
@@ -51,7 +53,7 @@ function App() {
 function Modal(props) {
   return (
     <div className="modal" style={{background : props.color}}>
-      <h4>{props.title[0]}</h4>
+      <h4>{props.title[props.modalTitle]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
       <button onClick={props.woman}>글수정</button>

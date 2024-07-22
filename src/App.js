@@ -1,3 +1,4 @@
+/* eslint-disable */
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
@@ -7,11 +8,13 @@ function App() {
   let [modal, setModal] = useState(false);
   let [like, setLike] = useState([0,0,0]);
   let [modalTitle, setModalTitle] = useState(0);
+  let [inputValue, setInputValue] = useState('');
   return (
     <div className="App">
       <div className="black-nav">
         <h4>블로그</h4>
       </div>
+      {/* 정렬 기능 */}
       <button onClick={()=>{
         let newTitle = [...title];
         newTitle.sort();
@@ -19,25 +22,41 @@ function App() {
       }}>정렬</button>
 
       {
+        // 반복문 사용
         title.map((a, i)=>{
           return (
             <div className="list" key={i}>
               <h4 onClick={()=>{
                 modal == true ? setModal(false) : setModal(true);
                 setModalTitle(i);
-              }}>{title[i]}</h4>
-              <span onClick={()=>{
+              }}>{title[i]}<span onClick={(e)=>{
+                e.stopPropagation();
                 let newLike = [...like];
                 newLike[i] += 1;
                 setLike(newLike);
-              }}> 👍</span> {like[i]}
+              }}> 👍</span> {like[i]}</h4>
+              <button onClick={()=>{
+                let newTitle = [...title];
+                newTitle.splice(i,1);
+                setTitle(newTitle);
+              }}>삭제</button>
               <p>7월 17일 작성</p>
             </div>
           )
         })
       }
 
+      <input onChange={
+        (e)=> {setInputValue(e.target.value);
+        }}/>
+      <button onClick={()=>{
+        let newTitle = [...title];
+        newTitle.unshift(inputValue);
+        setTitle(newTitle);
+      }}>생성</button>
+
       {
+        // 삼항연산자 / 인자 넘겨주기
         modal == true ? <Modal color={"skyblue"} title={title} woman = {
           ()=> {
             let newTitle = [...title];

@@ -6,9 +6,11 @@ import { useState } from 'react';
 function App() {
   let [title, setTitle] = useState(['남자 코트 추천', '강남 우동맛집', '파이썬 독학']);
   let [modal, setModal] = useState(false);
-  let [like, setLike] = useState([0,0,0]);
+  // title의 길이만큼 like 0 갯수를 설정
+  let [like, setLike] = useState(Array(title.length).fill(0));
   let [modalTitle, setModalTitle] = useState(0);
   let [inputValue, setInputValue] = useState('');
+  let dt = new Date();
   return (
     <div className="App">
       <div className="black-nav">
@@ -40,7 +42,8 @@ function App() {
                 newTitle.splice(i,1);
                 setTitle(newTitle);
               }}>삭제</button>
-              <p>7월 17일 작성</p>
+              <p></p>
+              <p>{dt.getMonth()+1}월 {dt.getDate()}일 작성</p>
             </div>
           )
         })
@@ -51,8 +54,16 @@ function App() {
         }}/>
       <button onClick={()=>{
         let newTitle = [...title];
-        newTitle.unshift(inputValue);
-        setTitle(newTitle);
+        let newLike = [...like];
+        if (inputValue == '') {
+          alert('빈 제목은 입력할 수 없습니다.');
+        }
+        else {
+          newTitle.unshift(inputValue);
+          newLike.unshift(0);
+          setLike(newLike);
+          setTitle(newTitle);
+        }
       }}>생성</button>
 
       {
@@ -73,7 +84,6 @@ function Modal(props) {
   return (
     <div className="modal" style={{background : props.color}}>
       <h4>{props.title[props.modalTitle]}</h4>
-      <p>날짜</p>
       <p>상세내용</p>
       <button onClick={props.woman}>글수정</button>
     </div>
